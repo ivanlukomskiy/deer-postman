@@ -1,0 +1,5 @@
+.gradle/*
+api/build/*
+build/*
+out/*
+data.db

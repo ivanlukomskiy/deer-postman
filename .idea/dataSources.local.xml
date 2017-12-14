@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="deer.h2" uuid="7d42bfb4-dca8-4f67-9bd4-129d8a5426e1">
+      <database-info product="H2" version="1.4.196 (2017-06-10)" jdbc-version="4.0" driver-name="H2 JDBC Driver" driver-version="1.4.196 (2017-06-10)">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>deer</user-name>
+      <resolve-scope>DEER.H2:public</resolve-scope>
+    </data-source>
+  </component>
+</project>
