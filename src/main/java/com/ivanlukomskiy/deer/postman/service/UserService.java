@@ -1,5 +1,6 @@
 package com.ivanlukomskiy.deer.postman.service;
 
+import com.ivanlukomskiy.deer.postman.DeerSantaException;
 import com.ivanlukomskiy.deer.postman.model.User;
 import com.ivanlukomskiy.deer.postman.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,8 @@ public class UserService {
     @Transactional
     public User createUser(User user) {
         if (findByLogin(user.getLogin()) != null) {
-            throw new IllegalArgumentException("User with login " + user.getLogin() + " already exists");
+            throw new DeerSantaException("login-conflict");
         }
-
         return userRepository.save(user);
     }
 

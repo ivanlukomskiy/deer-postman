@@ -1,5 +1,6 @@
 package com.ivanlukomskiy.deer.postman.service;
 
+import com.ivanlukomskiy.deer.postman.DeerSantaException;
 import com.ivanlukomskiy.deer.postman.model.PersonsSet;
 import com.ivanlukomskiy.deer.postman.model.User;
 import com.ivanlukomskiy.deer.postman.repository.PersonsSetRepository;
@@ -30,7 +31,7 @@ public class PersonsSetService {
     public PersonsSet save(PersonsSet personsSet, User user) {
         if(personsSet.getId() != null) {
             if(findOne(personsSet.getId(), user) == null) {
-                throw new IllegalArgumentException("Access denied");
+                throw new DeerSantaException("access-denied");
             }
         }
         return personsSetRepository.save(personsSet);

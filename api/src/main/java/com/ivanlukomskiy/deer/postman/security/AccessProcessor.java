@@ -1,5 +1,6 @@
 package com.ivanlukomskiy.deer.postman.security;
 
+import com.ivanlukomskiy.deer.postman.DeerSantaException;
 import com.ivanlukomskiy.deer.postman.annotations.Access;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -34,14 +35,14 @@ public class AccessProcessor {
     public void checkToken(JoinPoint joinPoint) throws Exception {
 
         if (RequestContextHolder.getRequestAttributes() == null) {
-            throw new IllegalAccessException("Failed to get request attributes");
+            throw new DeerSantaException("bad-token");
         }
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getRequest();
         String token = RequestUtils.getToken(request);
         if (token == null) {
-            throw new IllegalArgumentException("Token header \"" + TOKEN_HEADER_NAME + "\" required");
+            throw new DeerSantaException("no-token-header");
         }
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String methodName = signature.getMethod().getName();
@@ -51,7 +52,7 @@ public class AccessProcessor {
                         .getAnnotation(Access.class);
         boolean isTokenValid = tokenService.isTokenMatchesRoles(token, annotation.value());
         if (!isTokenValid) {
-            throw new IllegalAccessException("Access denied");
+            throw new DeerSantaException("access-denied");
         }
     }
 }

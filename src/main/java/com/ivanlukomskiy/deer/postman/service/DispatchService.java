@@ -1,5 +1,6 @@
 package com.ivanlukomskiy.deer.postman.service;
 
+import com.ivanlukomskiy.deer.postman.DeerSantaException;
 import com.ivanlukomskiy.deer.postman.model.Dispatch;
 import com.ivanlukomskiy.deer.postman.model.User;
 import com.ivanlukomskiy.deer.postman.repository.DispatchRepository;
@@ -7,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by ivanl <ilukomskiy@sbdagroup.com> on 15.12.2017.
@@ -34,9 +33,9 @@ public class DispatchService {
 
     @Transactional
     public Dispatch save(Dispatch dispatch, User user) {
-        if(dispatch.getId() != null) {
-            if(getDispatch(dispatch.getId(), user) == null) {
-                throw new IllegalArgumentException("Access denied");
+        if (dispatch.getId() != null) {
+            if (getDispatch(dispatch.getId(), user) == null) {
+                throw new DeerSantaException("access-denied");
             }
         }
         return dispatchRepository.save(dispatch);

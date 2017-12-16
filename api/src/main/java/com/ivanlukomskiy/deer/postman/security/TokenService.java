@@ -1,11 +1,9 @@
 package com.ivanlukomskiy.deer.postman.security;
 
+import com.ivanlukomskiy.deer.postman.DeerSantaException;
 import com.ivanlukomskiy.deer.postman.model.User;
 import com.ivanlukomskiy.deer.postman.service.UserService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -76,11 +74,11 @@ public class TokenService {
         User user = userService.findByLogin(login);
 
         if (user == null) {
-            throw new IllegalArgumentException("User with login " + login + " not found");
+            throw new DeerSantaException("login-user-not-found");
         }
 
         if (!getPasswordHash(password).equals(user.getPasswordHash())) {
-            throw new IllegalArgumentException("Incorrect password");
+            throw new DeerSantaException("incorrect-password");
         }
 
         Map<String, Object> tokenData = new HashMap<>();
@@ -111,12 +109,16 @@ public class TokenService {
     }
 
     private Map<String, Object> decode(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
-                .parseClaimsJws(token)
-                .getBody();
         Map<String, Object> result = new HashMap<>();
-        claims.forEach(result::put);
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                    .parseClaimsJws(token)
+                    .getBody();
+            claims.forEach(result::put);
+        } catch (Exception e) {
+            throw new DeerSantaException("bad-token");
+        }
         return result;
     }
 
@@ -128,7 +130,7 @@ public class TokenService {
         User user = userService.getUser(id);
 
         if (user == null) {
-            throw new IllegalArgumentException("User with id " + id + " not found");
+            throw new DeerSantaException("bad-token");
         }
 
         for (User.Role availableRole : roles) {
