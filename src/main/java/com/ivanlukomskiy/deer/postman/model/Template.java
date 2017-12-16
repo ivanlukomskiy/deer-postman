@@ -15,6 +15,10 @@ public class Template {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @ManyToOne
+    private User user;
+
     private String channel;
     @Lob
     private String content;

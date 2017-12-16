@@ -1,13 +1,11 @@
 package com.ivanlukomskiy.deer.postman.controller;
 
 import com.ivanlukomskiy.deer.postman.annotations.Access;
-import com.ivanlukomskiy.deer.postman.model.User;
 import com.ivanlukomskiy.deer.postman.model.dto.UserResponseDto;
 import com.ivanlukomskiy.deer.postman.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class UsersController {
     private UserService userService;
 
     @Access(ADMIN)
-    @RequestMapping(value = "users",method = RequestMethod.GET,produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "users", produces = APPLICATION_JSON_VALUE)
     public List<UserResponseDto> getUsers() {
         return userService.getUsers().stream().map(UserResponseDto::of).collect(Collectors.toList());
     }

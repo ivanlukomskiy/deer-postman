@@ -70,8 +70,8 @@ public class TokenService {
 
     @Transactional(readOnly = true)
     public String getToken(String login, String password) {
-        Objects.requireNonNull(login, "Username should be not null");
-        Objects.requireNonNull(password, "Username should be not null");
+        Objects.requireNonNull(login, "Login should be not null");
+        Objects.requireNonNull(password, "Password should be not null");
 
         User user = userService.findByLogin(login);
 

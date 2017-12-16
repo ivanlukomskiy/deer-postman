@@ -4,10 +4,7 @@ import com.ivanlukomskiy.deer.postman.util.JpaConverterJson;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by ivanl <ilukomskiy@sbdagroup.com> on 12.12.2017.
@@ -18,10 +15,10 @@ public class PersonsSet {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @ManyToOne
-    private User owner;
+    private User user;
 
     @Column(length = 100_000)
     @Convert(converter = JpaConverterJson.class)

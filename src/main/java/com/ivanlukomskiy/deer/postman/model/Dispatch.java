@@ -12,9 +12,14 @@ import java.util.Date;
 @Entity
 public class Dispatch {
 
+    public Dispatch(User user) {
+        this.user = user;
+        createDate = new Date();
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "persons_set")
@@ -30,5 +35,5 @@ public class Dispatch {
     private Date createDate;
 
     @ManyToOne
-    private User owner;
+    private User user;
 }

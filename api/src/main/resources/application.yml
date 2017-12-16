@@ -4,3 +4,7 @@ spring:
     url: jdbc:h2:file:~/deer/deer.h2
     username: deer
     password: i-love-bark
+
+server:
+  contextPath: /api
+  port: 4201
